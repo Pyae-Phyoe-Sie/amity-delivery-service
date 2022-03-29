@@ -1,0 +1,64 @@
+{
+    "routes": [
+        {
+            "id"            : 1,
+            "source"        : "A",
+            "destination"   : "B",
+            "cost"          : 1
+        },
+        {
+            "id"            : 2,
+            "source"        : "A",
+            "destination"   : "C",
+            "cost"          : 4
+        },
+        {
+            "id"            : 3,
+            "source"        : "A",
+            "destination"   : "D",
+            "cost"          : 10
+        },
+        {
+            "id"            : 4,
+            "source"        : "B",
+            "destination"   : "E",
+            "cost"          : 3
+        },
+        {
+            "id"            : 5,
+            "source"        : "C",
+            "destination"   : "D",
+            "cost"          : 4
+        },
+        {
+            "id"            : 6,
+            "source"        : "C",
+            "destination"   : "F",
+            "cost"          : 2
+        },
+        {
+            "id"            : 7,
+            "source"        : "D",
+            "destination"   : "E",
+            "cost"          : 1
+        },
+        {
+            "id"            : 8,
+            "source"        : "E",
+            "destination"   : "B",
+            "cost"          : 3
+        },
+        {
+            "id"            : 9,
+            "source"        : "E",
+            "destination"   : "A",
+            "cost"          : 2
+        },
+        {
+            "id"            : 10,
+            "source"        : "F",
+            "destination"   : "D",
+            "cost"          : 1
+        }
+    ] 
+}
