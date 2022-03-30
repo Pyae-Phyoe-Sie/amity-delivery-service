@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -42,6 +46,11 @@
   margin: 0px auto;
 }
 
+.navbar {
+  background-color: #1dc497;
+  color: #fff;
+}
+
 .navbar .container {
   display: flex;
   justify-content: space-between;
@@ -54,6 +63,10 @@
 
 .route-list p {
   padding: 5px 20px;
+  position: relative;
+}
+
+.route-list p:not(.no-record) {
   box-shadow: 0px 2px 4px rgb(23 39 51 / 11%);
   position: relative;
 }
@@ -80,4 +93,36 @@
   right: 5px;
   position: absolute;
   cursor: pointer;
+}
+
+.links a {
+  text-decoration: none;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+.links a:hover {
+  color: rgb(15, 6, 109);
+}
+
+.form {
+  margin-top: 30px;
+  border: 1px solid rgb(23 39 51 / 11%);
+  border-radius: 5px;
+  box-shadow: 0 16px 2rem 0 rgb(18 20 25 / 8%);
+    -webkit-transition: box-shadow .3s,-webkit-transform .3s;
+    transition: box-shadow .3s,transform .3s,-webkit-transform .3s;
+}
+
+.form-control input {
+
+}
+
+.form-control button {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #04be8c;
+  background-color: #1dc497;
+  color: #fff;
 }

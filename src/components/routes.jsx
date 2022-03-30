@@ -10,7 +10,7 @@ const RouteAdder = ({points, deletePoint}) => {
                     </div>
                 ))
             :
-                <p>There is no points.</p>
+                <p className="no-record">There is no points.</p>
             }
         </div>
     )
