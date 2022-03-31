@@ -8,52 +8,67 @@ const PossibleRoute = () => {
     const { error, isPending, data: routes }    = useFetch('http://localhost:4000/routes');
     const [source, setSource]                   = useState('');
     const [destination, setDestination]         = useState('');
+
+    const [errorSource, setErrorSource]             = useState('');
+    const [errorDestination, setErrorDestination]   = useState('');
+
+    const [disabled, setDisabled]               = useState(true);
+
     let routesList = routes;
 
     const [finalRoutes, setFinalRoutes]         = useState([]);
     let finalRouteList = [];
 
+    useEffect(() => {
+        if (source != "" && destination != "") {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }, [source, destination])
+
     const showPossibleRoute = () => {
-        routesList = routes;
-        let fullRoute = [];
-        let route = filterArray([source]);
-        // routesList = removeArray(route);
-        fullRoute.push(route);
-
-        let routeDestinationList = [];
-        let oldRouteDestinationList = [];
-        route.map(value => {
-            if (!routeDestinationList.includes(value.destination) && value.destination != destination) {
-                routeDestinationList.push(value.destination);
-            }
-        });
-
-        while(routeDestinationList.length > 0 && !arrayEquals(oldRouteDestinationList, routeDestinationList) ) {
-            oldRouteDestinationList = routeDestinationList;
-            route = filterArray(routeDestinationList);
+        if (source != "" && destination != "") {
+            setDisabled(false);
+            routesList = routes;
+            let fullRoute = [];
+            let route = filterArray([source]);
             // routesList = removeArray(route);
             fullRoute.push(route);
-            routeDestinationList = [];            
 
-            route.map(routeValue => {
-                if (!routeDestinationList.includes(routeValue.destination) && routeValue.destination != destination) {
-                    routeDestinationList.push(routeValue.destination);
+            let routeDestinationList = [];
+            let oldRouteDestinationList = [];
+            route.map(value => {
+                if (!routeDestinationList.includes(value.destination) && value.destination != destination) {
+                    routeDestinationList.push(value.destination);
                 }
             });
+
+            while(routeDestinationList.length > 0 && !arrayEquals(oldRouteDestinationList, routeDestinationList) ) {
+                oldRouteDestinationList = routeDestinationList;
+                route = filterArray(routeDestinationList);
+                // routesList = removeArray(route);
+                fullRoute.push(route);
+                routeDestinationList = [];            
+
+                route.map(routeValue => {
+                    if (!routeDestinationList.includes(routeValue.destination) && routeValue.destination != destination) {
+                        routeDestinationList.push(routeValue.destination);
+                    }
+                });
+            }
+
+            let result = executeRoute(fullRoute);
+            setFinalRoutes(finalRouteList);
+        } else {
+            setDisabled(true);
+            if (source == "") {
+                setErrorSource("Source is required!");
+            }
+            if (destination == "") {
+                setErrorDestination("Destination is required!");
+            }
         }
-
-        let result = executeRoute(fullRoute);
-        // console.log(finalRouteList);
-
-        // finalRouteList.map((array, index) => {
-        //     console.log(array);
-        //     if (!duplicateRoute(array.data)) {
-        //         finalRouteList[index].status = "incomplete";
-        //     }
-        // })
-        // duplicateRoute
-        setFinalRoutes(finalRouteList);
-
 
         // let routeDestination = '';
         // let routeSource = '';
@@ -227,9 +242,7 @@ const PossibleRoute = () => {
         if (!duplicateRoute(obj.data)) {
             finalRouteList.push(obj);
         }
-        
     }
-
 
     const arrayEquals = (a, b) => {
         return Array.isArray(a) &&
@@ -249,10 +262,17 @@ const PossibleRoute = () => {
         <div className="possible-form">
             <div className="container">
                 <div className="form">
+
+                    <h2>Possible Route Form</h2>
+
+                    <div className="error-div">
+                        {(errorSource != "") ? <p>{errorSource}</p> : "" }
+                        {(errorDestination != "") ? <p>{errorDestination}</p> : "" }
+                    </div>
                     <div className="form-control">
-                        <input type="text" name="source" id="source" value={source} onChange={(e) => setSource(e.target.value)} />
-                        <input type="text" name="destination" id="destination" value={destination} onChange={(e) => setDestination(e.target.value)} />
-                        <button type="button" onClick={showPossibleRoute}>Add</button>
+                        <input placeholder="A" type="text" name="source" id="source" maxLength="1" value={source} onChange={(e) => setSource((e.target.value).toUpperCase())} />
+                        <input placeholder="B" type="text" name="destination" id="destination" maxLength="1" value={destination} onChange={(e) => setDestination((e.target.value).toUpperCase())} />
+                        <button className={(disabled) ? "disabled" : ""} type="button" onClick={showPossibleRoute}>Add</button>
                     </div>
 
                     <div className="cost">

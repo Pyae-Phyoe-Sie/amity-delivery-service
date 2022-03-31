@@ -11,14 +11,24 @@ const CalculateCost = () => {
     const [flag, setFlag]                       = useState(true);
     const [cost, setCost]                       = useState(0);
 
+    const [disabled, setDisabled]               = useState(true);
+    const [addDisabled, setAddDisabled]         = useState(true);
+
     useEffect(() => {
         console.log("Point is "+points);
-        // if (points.length > 1) {
-        //     let btn = document.querySelector(".cost-btn");
-        //     btn.removeAttribute('disabled');
-        //     btn.classList.remove("disabled");
-        // }
+        if (points.length > 1) {
+            setDisabled(false);
+        }
     }, [points])
+
+    useEffect(() => {
+        console.log("Point is "+point);
+        if (point != "") {
+            setAddDisabled(false);
+        } else {
+            setAddDisabled(true);
+        }
+    }, [point])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,6 +40,8 @@ const CalculateCost = () => {
         } else {
             alert("Need one more points");
         }
+
+        setDisabled(true);
     }
 
     const filterArray = (source, destination) => {
@@ -97,20 +109,31 @@ const CalculateCost = () => {
         tempPoints.splice(index, 1);
         console.log(tempPoints);
         setPoints(points => [...tempPoints]);
+        
+        if (tempPoints.length < 2) {
+            setDisabled(true);
+        }
     }
 
     return (
         <div className="calculate-form">
             <div className="container">
                 <div className="form">
-                    {(points && <Routes points={points} deletePoint={deletePoint} />)}
+
+                    <h2>Calculate Cost Form</h2>
+
                     <div className="form-control">
-                        <input type="text" name="point" id="point" value={point} onChange={(e) => setPoint(e.target.value)} />
-                        <button type="button" onClick={addPoint}>Add</button>
-                        <button type="button" onClick={handleSubmit}>Calculate Cost</button>
+                        <input placeholder="A" type="text" name="point" id="point" maxLength="1" value={point} onChange={(e) => setPoint((e.target.value).toUpperCase())} />
+                        <button className={(addDisabled) ? "disabled" : ""} type="button" onClick={addPoint}>Add</button>
+                        <button className={(disabled) ? "disabled" : ""} type="button" onClick={handleSubmit}>Calculate Cost</button>
+                    </div>
+
+                    <div>
+                        {(points && <Routes points={points} deletePoint={deletePoint} />)}
                     </div>
 
                     <div className="cost">
+                        <p>Cost</p>
                         <p>{(flag) ? cost : "No Such Route"}</p>
                     </div>
                 </div>

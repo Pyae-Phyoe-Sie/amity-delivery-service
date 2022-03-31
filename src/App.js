@@ -8,6 +8,7 @@ import CalculateCost from './pages/CalculateCost';
 import PossibleRoute from './pages/PossibleRoute.jsx';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home'
+import Footer from './pages/Footer';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             </Route>
           </Switch>
         </div>
+        <Footer />
       </div>
     </Router>
   );
