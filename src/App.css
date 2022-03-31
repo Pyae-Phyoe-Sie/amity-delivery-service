@@ -83,7 +83,7 @@
 
 .cost {
   display: flex;
-  height: 50vh;
+  min-height: 50vh;
   justify-content: center;
   align-items: center;
 }
@@ -94,10 +94,12 @@
   position: absolute;
   cursor: pointer;
 }
-
-.links a {
+a {
   text-decoration: none;
   color: #fff;
+}
+
+.links a {
   padding: 5px 10px;
   font-weight: bold;
 }
@@ -113,10 +115,14 @@
   box-shadow: 0 16px 2rem 0 rgb(18 20 25 / 8%);
     -webkit-transition: box-shadow .3s,-webkit-transform .3s;
     transition: box-shadow .3s,transform .3s,-webkit-transform .3s;
+  padding: 20px 30px;
 }
 
 .form-control input {
-
+  padding: 9px 14px;
+  border-radius: 5px;
+  border: 1px solid #04be8c;
+  margin: 0px 5px;
 }
 
 .form-control button {
@@ -125,4 +131,30 @@
   border: 1px solid #04be8c;
   background-color: #1dc497;
   color: #fff;
+  padding: 10px 18px;
+  border-radius: 5px;
+  margin: 0px 5px;
+}
+
+.form-control button.disabled {
+  cursor: not-allowed;
+}
+
+.card {
+  flex-direction: row;
+  justify-content: flex-start !important;
+}
+
+.card>div {
+  display: flex;
+}
+
+.cost-list table {
+  min-width: 500px;
+  border: 1px solid #111;
+  margin: 20px 0px;
+}
+
+.cost-list table tr td {
+  border: 1px solid #111;
 }

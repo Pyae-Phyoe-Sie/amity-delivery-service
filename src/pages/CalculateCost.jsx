@@ -1,7 +1,7 @@
 import { useHistory, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import { useState, useEffect } from 'react';
-import Routes from '../components/routes';
+import Routes from '../components/Routes';
 
 const CalculateCost = () => {
     const history                               = useHistory();
@@ -13,14 +13,23 @@ const CalculateCost = () => {
 
     useEffect(() => {
         console.log("Point is "+points);
+        // if (points.length > 1) {
+        //     let btn = document.querySelector(".cost-btn");
+        //     btn.removeAttribute('disabled');
+        //     btn.classList.remove("disabled");
+        // }
     }, [points])
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        CalculateCostByPoints(points);
+        if (points.length > 1) {
+            CalculateCostByPoints(points);
 
-        setPoints(points => []);
+            setPoints(points => []);
+        } else {
+            alert("Need one more points");
+        }
     }
 
     const filterArray = (source, destination) => {
@@ -30,28 +39,30 @@ const CalculateCost = () => {
     }
 
     const CalculateCostByPoints = () => {
-        let routesList = [];
-        let cost = 0;
-        points.map((point, index) => {
-            if(index+1 < points.length) {
-                let route = filterArray(point, points[index+1]);
-                if (route.length == 0) {
-                    setFlag(false)
-                } else {
-                    routesList.push(route[0]);
+        if (points.length > 1) {
+            let routesList = [];
+            let cost = 0;
+            points.map((point, index) => {
+                if(index+1 < points.length) {
+                    let route = filterArray(point, points[index+1]);
+                    if (route.length == 0) {
+                        setFlag(false)
+                    } else {
+                        routesList.push(route[0]);
+                    }
                 }
-            }
-        });
-
-        if (flag) {
-            routesList.map(route => {
-                console.log(route.cost);
-                cost = cost + parseInt(route.cost);
             });
+
+            if (flag) {
+                routesList.map(route => {
+                    console.log(route.cost);
+                    cost = cost + parseInt(route.cost);
+                });
+            }
+
+            setCost(cost);
+
         }
-
-        setCost(cost);
-
         // let sourceFilterArray = filterArray(source, "source");
         // console.log(sourceFilterArray);
 

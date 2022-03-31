@@ -7,6 +7,7 @@ import Navbar from './pages/Navbar';
 import CalculateCost from './pages/CalculateCost';
 import PossibleRoute from './pages/PossibleRoute.jsx';
 import NotFound from './pages/NotFound';
+import Home from './pages/Home'
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
         <Navbar />
         <div className="content">
           <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
             <Route exact path="/calculate-cost">
               <CalculateCost />
             </Route>
